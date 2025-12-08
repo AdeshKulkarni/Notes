@@ -1,0 +1,80 @@
+ArrayList: (Dynamic Array DS)
+
+--> implements List interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> indexed based accessing or insertion of data is allowed
+--> Order of insertion of data is maintained/preserved
+--> Duplicates are allowed
+--> More suitable to perform insertion operation rear end(last end)
+
+LinkedList : (Doubly LinkedList DS)
+
+--> implements List and Deque interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> suitable to perform insertion operation at any given index
+--> indexed based accessing or insertion of data is allowed
+--> Duplicates are allowed
+--> Order of insertion of data is maintained/preserved
+
+ArrayDeque : (Double ended Queue)
+--> implements Deque interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> Duplicates are allowed
+--> indexed based accessing or insertion of data is not allowed
+--> suitable to perform insertion operation at rear end and front end of the collection
+--> Order of insertion of data is maintained/preserved
+
+PriorityQueue : (Min heap DS)
+
+--> implements Queue interface
+--> Highest priority object would be present at the front of the collection using Min Heap DS
+--> Duplicates are allowed
+--> indexed based accessing or insertion of data is not allowed
+--> Order of insertion of data is NOT maintained/preserved
+
+TreeSet : (BST DS)
+
+--> implements SortedSet interface sub of Set interface
+--> It will sotre data in sorted ascending order ( in order traversal)
+--> Duplication are not allowed
+--> indexed based accessing or insertion of data is not allowed
+--> If the tree we get based on data happens to be Balanced binary search tree than search operation is efficient however if the tree we get is skewed tree than like other classes above here also it is not soo efficient for search operation
+--> --> Order of insertion of data is NOT maintained/preserved
+
+HashSet  (Hashing algo)
+ 
+--> implements Set interface
+--> Duplicates are not allowed
+--> indexed based accessing or insertion of data is not allowed
+--> Efficient for search operation
+--> Order of insertion of data is NOT maintained/preserved
+
+LinkedHashSet  (Hashing algo)
+
+--> It's sub class of HashSet (1.5)
+--> Duplicates are not allowed
+--> indexed based accessing or insertion of data is not allowed
+--> Efficient for search operation
+
+--> Order of insertion of data is maintained/preserved
+
+
+==================================================================================================================
+
+Iterator must be used to access the data present within the Collection. Iterator Object is invokved by calling iterator method.
+
+FailFast: If we use Iterator to access the data present within collection and if we attempt for concurrent modification than it will lead to Exception and program will fail(No concurrent modification) 
+
+FailSafe: If we want to achive failsafe we must use classes present in java.util.concurrent package example: CopyOnWriteArrayList and so on....
+	If concurrent modification is attempted program will fail safe without leading to an Exception ( No Exception No concurrent modification)
+
+
+
+
+
+
+
+ 

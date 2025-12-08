@@ -1,0 +1,37 @@
+ArrayList: (Dynamic Array DS)
+
+--> implements List interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> indexed based accessing or insertion of data is allowed
+--> Order of insertion of data is maintained/preserved
+--> Duplicates are allowed
+--> More suitable to perform insertion operation rear end(last end)
+
+LinkedList : (Doubly LinkedList DS)
+
+--> implements List and Deque interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> suitable to perform insertion operation at any given index
+--> indexed based accessing or insertion of data is allowed
+--> Duplicates are allowed
+--> Order of insertion of data is maintained/preserved
+
+ArrayDeque : (Double ended Queue)
+--> implements Deque interface
+--> Can store both homogenius(Similar) and heterogenius type of data
+--> add() is used to add data at rear end into Collection and it will store data as Object
+--> Duplicates are allowed
+--> suitable to perform insertion operation at rear end and front end of the collection
+--> Order of insertion of data is maintained/preserved
+
+
+
+
+
+
+
+
+
+ 
