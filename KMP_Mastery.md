@@ -93,44 +93,107 @@ more than this.
 **Step 1 — Build the LPS array for the pattern** (this is 90% of "writing KMP"):
 
 ```java
-int[] buildLPS(String p) {
-    int n = p.length();
-    int[] lps = new int[n];
-    int len = 0; // length of the previous longest prefix-suffix
-    for (int i = 1; i < n; i++) {
-        while (len > 0 && p.charAt(i) != p.charAt(len)) {
-            len = lps[len - 1];   // fall back using lps itself
+/**
+     * Step 1: Build the LPS (Longest Prefix Suffix) Array
+     * This tells us how much we can safely skip when a mismatch occurs.
+     */
+    private static int[] buildLPS(String needle) {
+        int m = needle.length();
+        int[] lps = new int[m]; // In Java, integer arrays are automatically filled with 0s
+
+        int i = 0; // Tracks the length of the current matching prefix (the "streak")
+        int j = 1; // Scans through the string
+
+        while (j < m) {
+            // Using charAt() to compare characters in Java
+            if (needle.charAt(i) == needle.charAt(j)) {
+                // MATCH: Increment our streak, record it, and move both pointers forward.
+                lps[j] = i + 1;
+                i++;
+                j++;
+            } else {
+                // MISMATCH
+                if (i > 0) {
+                    // Fallback: Drop the streak to the last safe "save point"
+                    // Do not increment j here, we re-evaluate it on the next loop.
+                    i = lps[i - 1];
+                } else {
+                    // Dead end: No matches at all. Record 0 and move on.
+                    lps[j] = 0;
+                    j++;
+                }
+            }
         }
-        if (p.charAt(i) == p.charAt(len)) {
-            len++;
-        }
-        lps[i] = len;
+        return lps;
     }
-    return lps;
-}
 ```
 
 **Step 2 — Scan the text using the LPS array to know where to fall back on mismatch:**
 
 ```java
-List<Integer> kmpSearch(String t, String p) {
-    int[] lps = buildLPS(p);
-    List<Integer> matches = new ArrayList<>();
-    int i = 0, j = 0; // i = text pointer, j = pattern pointer
-    while (i < t.length()) {
-        if (t.charAt(i) == p.charAt(j)) {
-            i++; j++;
-            if (j == p.length()) {
-                matches.add(i - j);   // found a match
-                j = lps[j - 1];
+/**
+     * Step 2: Search the Haystack using the Needle and LPS Array
+     */
+    public static int kmpSearch(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+
+        // Edge case: empty needle is technically found at index 0
+        if (m == 0) return 0;
+
+        // Get our skipping blueprint
+        int[] lps = buildLPS(needle);
+
+        int i = 0; // Haystack pointer (This ONLY moves forward, never backward!)
+        int j = 0; // Needle pointer
+
+        while (i < n) {
+            if (haystack.charAt(i) == needle.charAt(j)) {
+                // MATCH: Move both pointers forward
+                i++;
+                j++;
+            } else {
+                // MISMATCH
+                if (j == 0) {
+                    // We are at the start of the needle, so just move the haystack pointer forward
+                    i++;
+                } else {
+                    // The magic of KMP: Backtrack the needle pointer using the LPS array 
+                    // so we don't have to rewind the haystack pointer 'i'.
+                    j = lps[j - 1];
+                }
             }
-        } else if (j > 0) {
-            j = lps[j - 1];           // fall back, DON'T move i
+
+            // Did we find the whole string?
+            if (j == m) {
+                // Return the exact starting index where the needle was found in the haystack
+                return i - m;
+
+                // Note: If you wanted to find ALL occurrences instead of just the first one, 
+                // you would print the index here, and then do: j = lps[j - 1]; 
+            }
+        }
+
+        // If the loop finishes and we never hit j == m, the needle isn't in the haystack
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        // --- TEST IT OUT ---
+        String haystack = "onionionsky";
+        String needle = "onions";
+
+        int result = kmpSearch(haystack, needle);
+
+        System.out.println("Haystack: " + haystack);
+        System.out.println("Needle: " + needle);
+        
+        if (result != -1) {
+            System.out.println("Pattern found at index: " + result); // Expected output: 3
         } else {
-            i++;                      // no fallback possible, move i
+            System.out.println("Pattern not found.");
         }
     }
-    return matches;
 }
 ```
 
